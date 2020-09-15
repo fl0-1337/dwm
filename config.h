@@ -6,7 +6,7 @@ static const unsigned int snap           = 32;  // snap pixel
 static const unsigned int systraypinning = 0;   // 0: sloppy systray follows selected monitor, >0: pin systray to monitor X
 static const unsigned int systrayspacing = 2;   // systray spacing
 static const int systraypinningfailfirst = 1;   // 1: if pinning fails, display systray on the first monitor, False: display systray on the last monito
-static const int showsystray             = 1;   // 0 means no systray
+static const int showsystray             = 0;   // 0 means no systray
 static const int showbar                 = 1;   // 0 means no bar
 static const int topbar                  = 1;   // 0 means bottom bar
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
@@ -84,7 +84,7 @@ static const char *termcmd[]  = { "st", NULL };
 
 /* SCRATCHPAD */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", "-e", "tmux", NULL };
 
 #include "movestack.c"
 #include "selfrestart.c"
@@ -100,6 +100,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_space,  togglescratch,  {.v = scratchpadcmd } },
+
+	/* DMENU PROGRAMS */
+	{ MODKEY|ControlMask,           XK_u,      spawn,          SHCMD("dunicode") },
+	{ MODKEY|ControlMask,           XK_o,      spawn,          SHCMD("dfileopen") },
+	{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("dwebsearch") },
+	{ MODKEY|ControlMask,           XK_t,      spawn,          SHCMD("dtodo") },
+	{ MODKEY|ControlMask,           XK_n,      spawn,          SHCMD("dnotes") },
+	{ MODKEY|ControlMask,           XK_d,      spawn,          SHCMD("dswitch") },
 
 	/* VOLUME CONTROL */
         { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("smixer mute") },
@@ -203,10 +211,14 @@ static Button buttons[] = {
 
 	{ ClkWinTitle,          0,              Button1,        zoom,           {0} },
 
-	/* { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } }, */
+	/* BLOCK_BUTTONS */
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
+	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
+	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD("st -e nvim ~/.local/repos/dwmblocks/config.h") },
 
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
