@@ -95,6 +95,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("dlock") },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("dpowermenu") },
+	{ MODKEY,                       XK_BackSpace,      spawn,          SHCMD("winhide -h") },
+	{ MODKEY|ShiftMask,             XK_BackSpace,      spawn,          SHCMD("winhide -s") },
 
 	/* SPAWN PROGRAMS */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
